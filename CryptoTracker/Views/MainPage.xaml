@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="DataListView" ItemsSource="{Binding Data}">
+        <ListView x:Name="DataListView" ItemsSource="{Binding Currencies}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Symbol" Width="auto">

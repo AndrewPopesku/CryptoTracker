@@ -1,32 +1,40 @@
-﻿using CryptoTracker.Services;
+﻿using CryptoTracker.Helpers;
+using CryptoTracker.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CryptoTracker.ViewModels
 {
-    public class CryptoCurrenciesListingViewModel
+    public class CryptoCurrenciesListingViewModel : ViewModelBase
     {
-        private readonly CapCoinService capCoinService;
+        private readonly CapCoinService _capCoinService;
+        private ObservableCollection<CryptoCurrencyViewModel> _currencies;
+
+        public ObservableCollection<CryptoCurrencyViewModel> Currencies
+        {
+            get => _currencies;
+            set
+            {
+                _currencies = value;
+                OnPropertyChanged(nameof(Currencies));
+            }
+        }
 
         public CryptoCurrenciesListingViewModel(CapCoinService capCoinService)
         {
-            this.capCoinService = capCoinService;
+            _capCoinService = capCoinService;
+            _currencies = new ObservableCollection<CryptoCurrencyViewModel>();
+            InitializeData();
         }
 
-        public async Task<List<CryptoCurrenciesListingItemViewModel>> GetData()
+        private async void InitializeData()
         {
-            var result = new List<CryptoCurrenciesListingItemViewModel>();
-
-            var cryptoModelList = await capCoinService.GetCryptoCurrencies(10);
-            foreach(var c in cryptoModelList)
-            {
-                result.Add(new CryptoCurrenciesListingItemViewModel(c));
-            }
-
-            return result;
+            var cryptoModelList = await _capCoinService.GetCryptoCurrencies(10);
+            Currencies.AddRange(cryptoModelList);
         }
     }
 }

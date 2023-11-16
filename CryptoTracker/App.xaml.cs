@@ -1,4 +1,5 @@
 ﻿using CryptoTracker.Services;
+using CryptoTracker.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -16,29 +17,12 @@ namespace CryptoTracker
     /// </summary>
     public partial class App : Application
     {
-        private IHost? AppHost {  get; set; }
-
-        public App()
+        protected override void OnStartup(StartupEventArgs e)
         {
-            AppHost = Host.CreateDefaultBuilder()
-                .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddSingleton<CapCoinService>();
-                })
-                .Build();
-        }
-
-        protected override async void OnStartup(StartupEventArgs e)
-        {
-            await AppHost!.StartAsync();
+            MainWindow = new MainWindow();
+            MainWindow.Show();
 
             base.OnStartup(e);
-        }
-
-        protected override async void OnExit(ExitEventArgs e)
-        {
-            await AppHost!.StopAsync();
-            base.OnExit(e);
         }
     }
 }

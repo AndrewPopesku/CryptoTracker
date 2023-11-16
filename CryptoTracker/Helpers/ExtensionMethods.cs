@@ -11,11 +11,11 @@ namespace CryptoTracker.Helpers
 {
     public static class ExtensionMethods
     {
-        public static void AddRange(this ObservableCollection<CryptoCurrenciesListingItemViewModel> value, List<CryptoCurrenciesListingItemViewModel> list)
+        public static void AddRange(this ObservableCollection<CryptoCurrencyViewModel> value, List<CryptoCurrency> list)
         {
             foreach(var crypto in list)
             {
-                value.Add(crypto);
+                value.Add(new CryptoCurrencyViewModel(crypto));
             }
         }
 
