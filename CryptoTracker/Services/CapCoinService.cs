@@ -16,10 +16,11 @@ namespace CryptoTracker.Services
     public class CapCoinService
     {
         private HttpClient _httpClient;
-        private static string _baseUrl = "https://api.coincap.io/v2/";
+        private string _baseUrl;
 
-        public CapCoinService()
+        public CapCoinService(string baseUrl)
         {
+            _baseUrl = baseUrl;
             _httpClient = new HttpClient();
         }
 

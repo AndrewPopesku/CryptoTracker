@@ -18,7 +18,7 @@ namespace CryptoTracker.Commands
 
         public abstract void Execute(object? parameter);
 
-        protected void OnCanExecuteChanged(object? parameter)
+        protected void OnCanExecutedChanged()
         {
             CanExecuteChanged?.Invoke(this, new EventArgs());
         }

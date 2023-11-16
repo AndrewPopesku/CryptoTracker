@@ -1,10 +1,5 @@
 ﻿using CryptoTracker.Commands;
-using CryptoTracker.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CryptoTracker.Services;
 using System.Windows.Input;
 
 namespace CryptoTracker.ViewModels
@@ -14,11 +9,10 @@ namespace CryptoTracker.ViewModels
         public ICommand BackCommand { get; }
             
         public CryptoCurrencyDetailsViewModel(
-            NavigationStore navigationStore,
-            Func<CryptoCurrenciesListingViewModel> listingViewModel
+            NavigationService<CryptoCurrenciesListingViewModel> navigationService
             )
         {
-            BackCommand = new NavigateCommand(navigationStore, listingViewModel);
+            BackCommand = new NavigateCommand<CryptoCurrenciesListingViewModel>(navigationService);
         }
     }
 }

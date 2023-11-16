@@ -27,18 +27,17 @@ namespace CryptoTracker.ViewModels
 
         public CryptoCurrenciesListingViewModel(
             CapCoinService capCoinService, 
-            NavigationStore navigationStore,
-            Func<CryptoCurrencyDetailsViewModel> createDetailsViewModel)
+            NavigationService<CryptoCurrencyDetailsViewModel> navigationService)
         {
             _capCoinService = capCoinService;
             _currencies = new ObservableCollection<CryptoCurrencyViewModel>();
-            InitializeData(navigationStore, createDetailsViewModel);
+            InitializeData(navigationService);
         }
 
-        private async void InitializeData(NavigationStore navigationStore, Func<CryptoCurrencyDetailsViewModel> createDetailsViewModel)
+        private async void InitializeData(NavigationService<CryptoCurrencyDetailsViewModel> navigationService)
         {
             var cryptoModelList = await _capCoinService.GetCryptoCurrencies(10);
-            Currencies.AddRange(cryptoModelList, navigationStore, createDetailsViewModel);
+            Currencies.AddRange(cryptoModelList, navigationService);
         }
     }
 }

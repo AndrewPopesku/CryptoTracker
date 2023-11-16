@@ -1,6 +1,7 @@
 ﻿using CryptoTracker.Commands;
 using CryptoTracker.Helpers;
 using CryptoTracker.Models;
+using CryptoTracker.Services;
 using CryptoTracker.Stores;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,8 @@ namespace CryptoTracker.ViewModels
         public ICommand DetailsCommand { get; }
 
         public CryptoCurrencyViewModel(
-            CryptoCurrency cryptoCurrency, 
-            NavigationStore navigationStore, 
-            Func<CryptoCurrencyDetailsViewModel> createViewModel
+            CryptoCurrency cryptoCurrency,
+            NavigationService<CryptoCurrencyDetailsViewModel> navigationService
             )
         {
             Id = cryptoCurrency.Id;
@@ -38,7 +38,7 @@ namespace CryptoTracker.ViewModels
             VolumeUsd24Hr = cryptoCurrency.VolumeUsd24Hr.ToMoneyUsdStringFormat();
             MarketCapUsd = cryptoCurrency.MarketCapUsd.ToMoneyUsdStringFormat();
 
-            DetailsCommand = new NavigateCommand(navigationStore, createViewModel);
+            DetailsCommand = new NavigateCommand<CryptoCurrencyDetailsViewModel>(navigationService);
         }
     }
 }

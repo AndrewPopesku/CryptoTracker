@@ -18,36 +18,53 @@ namespace CryptoTracker
     /// </summary>
     public partial class App : Application
     {
-        private readonly NavigationStore _navigationStore;
-        private readonly CapCoinService _capCoinService;
+        private IHost _host;
 
         public App()
         {
-            _navigationStore = new NavigationStore();
-            _capCoinService = new CapCoinService();
+            _host = Host.CreateDefaultBuilder()
+                .ConfigureServices(services =>
+                {
+                    services.AddSingleton(new CapCoinService("https://api.coincap.io/v2/"));
+                    services.AddSingleton<NavigationStore>();
+
+                    services.AddTransient<CryptoCurrenciesListingViewModel>();
+                    services.AddSingleton<Func<CryptoCurrenciesListingViewModel>>(s =>
+                        () => s.GetRequiredService<CryptoCurrenciesListingViewModel>());
+                    services.AddSingleton<NavigationService<CryptoCurrenciesListingViewModel>>();
+
+                    services.AddTransient<CryptoCurrencyDetailsViewModel>();
+                    services.AddSingleton<Func<CryptoCurrencyDetailsViewModel>>(s =>
+                        () => s.GetRequiredService<CryptoCurrencyDetailsViewModel>());
+                    services.AddSingleton<NavigationService<CryptoCurrencyDetailsViewModel>>();
+
+                    services.AddSingleton<MainViewModel>();
+                    services.AddSingleton(s => new MainWindow()
+                    {
+                        DataContext = s.GetRequiredService<MainViewModel>()
+                    });
+                })
+                .Build();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateListingViewModel();
+            _host.Start();
 
-            MainWindow = new MainWindow()
-            {
-                DataContext = new MainViewModel(_navigationStore)
-            };
+            var navigationService = _host.Services.GetRequiredService<NavigationService<CryptoCurrenciesListingViewModel>>();
+            navigationService.Navigate();
+
+            MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();
 
             base.OnStartup(e);
         }
 
-        private CryptoCurrenciesListingViewModel CreateListingViewModel()
+        protected override void OnExit(ExitEventArgs e)
         {
-            return new CryptoCurrenciesListingViewModel(_capCoinService, _navigationStore, CreateDetailsViewModel);
-        }
+            _host.Dispose();
 
-        private CryptoCurrencyDetailsViewModel CreateDetailsViewModel()
-        {
-            return new CryptoCurrencyDetailsViewModel(_navigationStore, CreateListingViewModel);
+            base.OnExit(e);
         }
     }
 }

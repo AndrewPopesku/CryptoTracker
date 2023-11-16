@@ -1,4 +1,5 @@
 ﻿using CryptoTracker.Models;
+using CryptoTracker.Services;
 using CryptoTracker.Stores;
 using CryptoTracker.ViewModels;
 using System;
@@ -14,14 +15,13 @@ namespace CryptoTracker.Helpers
     {
         public static void AddRange(
             this ObservableCollection<CryptoCurrencyViewModel> value, 
-            List<CryptoCurrency> list, 
-            NavigationStore navigationStore,
-            Func<CryptoCurrencyDetailsViewModel> createDetailsViewModel
+            List<CryptoCurrency> list,
+            NavigationService<CryptoCurrencyDetailsViewModel> navigationService
             )
         {
             foreach(var crypto in list)
             {
-                value.Add(new CryptoCurrencyViewModel(crypto, navigationStore, createDetailsViewModel));
+                value.Add(new CryptoCurrencyViewModel(crypto, navigationService));
             }
         }
 
