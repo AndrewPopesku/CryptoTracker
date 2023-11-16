@@ -18,7 +18,7 @@ namespace CryptoTracker.Views
     /// <summary>
     /// Interaction logic for CryptoCurrencyDetails.xaml
     /// </summary>
-    public partial class CryptoCurrencyDetails : Page
+    public partial class CryptoCurrencyDetails : UserControl
     {
         public CryptoCurrencyDetails()
         {

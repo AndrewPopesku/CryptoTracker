@@ -1,4 +1,5 @@
 ﻿using CryptoTracker.Services;
+using CryptoTracker.Stores;
 using CryptoTracker.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,12 +18,36 @@ namespace CryptoTracker
     /// </summary>
     public partial class App : Application
     {
+        private readonly NavigationStore _navigationStore;
+        private readonly CapCoinService _capCoinService;
+
+        public App()
+        {
+            _navigationStore = new NavigationStore();
+            _capCoinService = new CapCoinService();
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow = new MainWindow();
+            _navigationStore.CurrentViewModel = CreateListingViewModel();
+
+            MainWindow = new MainWindow()
+            {
+                DataContext = new MainViewModel(_navigationStore)
+            };
             MainWindow.Show();
 
             base.OnStartup(e);
+        }
+
+        private CryptoCurrenciesListingViewModel CreateListingViewModel()
+        {
+            return new CryptoCurrenciesListingViewModel(_capCoinService, _navigationStore, CreateDetailsViewModel);
+        }
+
+        private CryptoCurrencyDetailsViewModel CreateDetailsViewModel()
+        {
+            return new CryptoCurrencyDetailsViewModel(_navigationStore, CreateListingViewModel);
         }
     }
 }

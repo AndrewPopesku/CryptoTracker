@@ -1,13 +1,11 @@
-﻿<Page x:Class="CryptoTracker.Views.MainPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:CryptoTracker.Views"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainPage">
-
+﻿<UserControl x:Class="CryptoTracker.Views.CryptoCurrenciesList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CryptoTracker.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -29,8 +27,16 @@
                     <GridViewColumn Header="24h Change" DisplayMemberBinding="{Binding Change24Hr}" Width="100"/>
                     <GridViewColumn Header="24h Volume" DisplayMemberBinding="{Binding VolumeUsd24Hr}" Width="100"/>
                     <GridViewColumn Header="Market Cap" DisplayMemberBinding="{Binding MarketCapUsd}" Width="100"/>
+                    <GridViewColumn Header="Details" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="View Details"
+                                        Command="{Binding DetailsCommand}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
     </Grid>
-</Page>
+</UserControl>
