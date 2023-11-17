@@ -10,13 +10,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="250"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
+        <StackPanel Grid.Row="0"
+                    Width="700">
             <Button Command="{Binding BackCommand}" 
-                    Content="Back" 
-                    Width="50" 
+                    Content="Back"
+                    Width="50"
                     Height="20"
                     HorizontalAlignment="Left"/>
 
@@ -41,8 +42,8 @@
             </Grid>
         </StackPanel>
 
-        <Grid Grid.Row="3">
-            <components:HistoryListView DataContext="{Binding HistoryViewModel}"/>
+        <Grid Grid.Row="1">
+            <components:HistoryListView DataContext="{Binding HistoryViewModel}" Width="700"/>
         </Grid>
     </Grid>
 </UserControl>
