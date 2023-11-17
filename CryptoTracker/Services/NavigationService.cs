@@ -11,17 +11,19 @@ namespace CryptoTracker.Services
     public class NavigationService<TViewModel> where TViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
-        private readonly Func<TViewModel> _createViewModel;
+        private readonly Func<string, TViewModel> _createViewModel;
 
-        public NavigationService(NavigationStore navigationStore, Func<TViewModel> createViewModel)
+        public string CurrencyId { get; set; }
+
+        public NavigationService(NavigationStore navigationStore, Func<string, TViewModel> createViewModel)
         {
             _navigationStore = navigationStore;
             _createViewModel = createViewModel;
         }
 
-        public void Navigate()
+        public void Navigate(object? parameter)
         {
-            _navigationStore.CurrentViewModel = _createViewModel();
+            _navigationStore.CurrentViewModel = _createViewModel(parameter as string);
         }
     }
 }

@@ -24,13 +24,49 @@ namespace CryptoTracker.Services
             _httpClient = new HttpClient();
         }
 
-        public async Task<List<CryptoCurrency>> GetCryptoCurrencies(int quantity)
+        public async Task<List<CryptoCurrency>> GetTopCryptoCurrencies(int quantity)
         {
-            var response = await _httpClient.GetStringAsync(_baseUrl + "assets");
-            var jsonData = JObject.Parse(response);
-            var cryptoCurrencies = JsonConvert.DeserializeObject<List<CryptoCurrency>>(jsonData["data"].ToString());
+            var endpoint = "assets/";
+            var jsonString = await GetJsonDataFromEndpoint(endpoint);
 
-            return cryptoCurrencies;
+            var cryptoCurrencies = JsonConvert.DeserializeObject<List<CryptoCurrency>>(jsonString);
+
+            return cryptoCurrencies.OrderByDescending(crypto => crypto.MarketCapUsd).Take(quantity).ToList();
+        }
+
+        public async Task<CryptoCurrency> GetCryptoCurrencyById(string id)
+        {
+            var endpoint = "assets/" + id;
+            var jsonString = await GetJsonDataFromEndpoint(endpoint);
+
+            var cryptoCurrency = JsonConvert.DeserializeObject<CryptoCurrency>(jsonString);
+
+            return cryptoCurrency;
+        }
+
+        public async Task<List<PriceHistoryEntry>> GetCryptoCurrencyHistoryById(string id)
+        {
+            var endpoint = "assets/" + id + "/history?interval=d1";
+            var jsonString = await GetJsonDataFromEndpoint(endpoint);
+
+            var cryptoPriceHistoryEntries = JsonConvert.DeserializeObject<List<PriceHistoryEntry>>(jsonString);
+
+            return cryptoPriceHistoryEntries.TakeLast(20).ToList();
+        }
+
+        private async Task<string> GetJsonDataFromEndpoint(string endpoint)
+        {
+            try
+            {
+                var response = await _httpClient.GetStringAsync(_baseUrl + endpoint);
+                var rawJson = JObject.Parse(response);
+                return rawJson["data"].ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching data from endpoint '{endpoint}': {ex.Message}");
+                return null;
+            }
         }
     }
 }

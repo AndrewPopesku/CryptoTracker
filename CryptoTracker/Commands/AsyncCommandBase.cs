@@ -38,9 +38,6 @@ namespace CryptoTracker.Commands
             }
         }
 
-        private Task ExecuteAsync(object? parameter)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract Task ExecuteAsync(object? parameter);
     }
 }

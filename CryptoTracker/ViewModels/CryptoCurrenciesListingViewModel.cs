@@ -27,7 +27,8 @@ namespace CryptoTracker.ViewModels
 
         public CryptoCurrenciesListingViewModel(
             CapCoinService capCoinService, 
-            NavigationService<CryptoCurrencyDetailsViewModel> navigationService)
+            NavigationService<CryptoCurrencyDetailsViewModel> navigationService
+            )
         {
             _capCoinService = capCoinService;
             _currencies = new ObservableCollection<CryptoCurrencyViewModel>();
@@ -36,7 +37,7 @@ namespace CryptoTracker.ViewModels
 
         private async void InitializeData(NavigationService<CryptoCurrencyDetailsViewModel> navigationService)
         {
-            var cryptoModelList = await _capCoinService.GetCryptoCurrencies(10);
+            var cryptoModelList = await _capCoinService.GetTopCryptoCurrencies(10);
             Currencies.AddRange(cryptoModelList, navigationService);
         }
     }

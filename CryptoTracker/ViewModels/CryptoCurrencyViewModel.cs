@@ -23,12 +23,9 @@ namespace CryptoTracker.ViewModels
         public string VolumeUsd24Hr { get; set; }
         public string MarketCapUsd { get; set; }
 
-        public ICommand DetailsCommand { get; }
+        public ICommand? DetailsCommand { get; }
 
-        public CryptoCurrencyViewModel(
-            CryptoCurrency cryptoCurrency,
-            NavigationService<CryptoCurrencyDetailsViewModel> navigationService
-            )
+        public CryptoCurrencyViewModel(CryptoCurrency cryptoCurrency)
         {
             Id = cryptoCurrency.Id;
             Symbol = cryptoCurrency.Symbol.ToUpper();
@@ -37,7 +34,13 @@ namespace CryptoTracker.ViewModels
             Change24Hr = cryptoCurrency.ChangePercent24Hr.ToString("+0.##%;-0.##%");
             VolumeUsd24Hr = cryptoCurrency.VolumeUsd24Hr.ToMoneyUsdStringFormat();
             MarketCapUsd = cryptoCurrency.MarketCapUsd.ToMoneyUsdStringFormat();
+        }
 
+        public CryptoCurrencyViewModel(
+            CryptoCurrency cryptoCurrency,
+            NavigationService<CryptoCurrencyDetailsViewModel> navigationService
+            ) : this(cryptoCurrency)
+        {
             DetailsCommand = new NavigateCommand<CryptoCurrencyDetailsViewModel>(navigationService);
         }
     }

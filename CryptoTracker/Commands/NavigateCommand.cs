@@ -2,6 +2,7 @@
 using CryptoTracker.Stores;
 using CryptoTracker.ViewModels;
 using System;
+using System.Threading.Tasks;
 
 namespace CryptoTracker.Commands
 {
@@ -16,7 +17,7 @@ namespace CryptoTracker.Commands
 
         public override void Execute(object? parameter)
         {
-            _navigationService.Navigate();
+            _navigationService.Navigate(parameter);
         }
     }
 }

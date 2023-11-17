@@ -29,13 +29,16 @@ namespace CryptoTracker
                     services.AddSingleton<NavigationStore>();
 
                     services.AddTransient<CryptoCurrenciesListingViewModel>();
-                    services.AddSingleton<Func<CryptoCurrenciesListingViewModel>>(s =>
-                        () => s.GetRequiredService<CryptoCurrenciesListingViewModel>());
+                    services.AddSingleton<Func<string, CryptoCurrenciesListingViewModel>>(s =>
+                        (id) => s.GetRequiredService<CryptoCurrenciesListingViewModel>());
                     services.AddSingleton<NavigationService<CryptoCurrenciesListingViewModel>>();
 
-                    services.AddTransient<CryptoCurrencyDetailsViewModel>();
-                    services.AddSingleton<Func<CryptoCurrencyDetailsViewModel>>(s =>
-                        () => s.GetRequiredService<CryptoCurrencyDetailsViewModel>());
+                    services.AddSingleton<Func<string, CryptoCurrencyDetailsViewModel>>(s =>
+                        (id) => new CryptoCurrencyDetailsViewModel(
+                                    s.GetRequiredService<NavigationService<CryptoCurrenciesListingViewModel>>(),
+                                    s.GetRequiredService<CapCoinService>(),
+                                    id
+                                ));
                     services.AddSingleton<NavigationService<CryptoCurrencyDetailsViewModel>>();
 
                     services.AddSingleton<MainViewModel>();
@@ -52,7 +55,7 @@ namespace CryptoTracker
             _host.Start();
 
             var navigationService = _host.Services.GetRequiredService<NavigationService<CryptoCurrenciesListingViewModel>>();
-            navigationService.Navigate();
+            navigationService.Navigate(null);
 
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();

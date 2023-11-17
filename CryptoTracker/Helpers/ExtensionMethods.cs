@@ -25,6 +25,11 @@ namespace CryptoTracker.Helpers
             }
         }
 
+        public static CryptoCurrencyViewModel ToCryptoCurrencyViewMode(this CryptoCurrency cryptoCurrency)
+        {
+            return new CryptoCurrencyViewModel(cryptoCurrency);
+        }
+
         public static string ToMoneyUsdStringFormat(this double number)
         {
             if (number >= 1_000_000_000) // If the number is a billion or more
