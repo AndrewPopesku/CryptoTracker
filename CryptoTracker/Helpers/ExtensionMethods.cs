@@ -46,7 +46,7 @@ namespace CryptoTracker.Helpers
             }
             else // Otherwise, just show the number as is
             {
-                return "$" + number.ToString();
+                return "$" + number.ToString("0.#####");
             }
         }
     }

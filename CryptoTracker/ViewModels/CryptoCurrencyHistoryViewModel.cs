@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Models;
+﻿using CryptoTracker.Helpers;
+using CryptoTracker.Models;
 using CryptoTracker.Services;
 using LiveCharts;
 using LiveCharts.Defaults;
@@ -10,6 +11,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CryptoTracker.ViewModels
@@ -54,6 +56,7 @@ namespace CryptoTracker.ViewModels
         public CryptoCurrencyHistoryViewModel(CapCoinService capCoinService, string currencyId)
         {
             _capCoinService = capCoinService;
+            Thread.Sleep(1000);
             InitializeChart(currencyId);
         }
 
@@ -84,7 +87,7 @@ namespace CryptoTracker.ViewModels
             var labels = priceHistoryList.Select(entry => entry.Date.AddMicroseconds(entry.Time)
                 .ToString("MM/dd/yyyy HH:mm")).ToArray();
 
-            YAxisLabelFormatter = value => value.ToString("C3", new CultureInfo("en-US"));
+            YAxisLabelFormatter = value => value.ToMoneyUsdStringFormat();
             Formatter = value =>
             {
                 var index = (int)value;

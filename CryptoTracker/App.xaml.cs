@@ -29,16 +29,13 @@ namespace CryptoTracker
                     services.AddSingleton<NavigationStore>();
 
                     services.AddTransient<CryptoCurrenciesListingViewModel>();
-                    services.AddSingleton<Func<string, CryptoCurrenciesListingViewModel>>(s =>
-                        (id) => s.GetRequiredService<CryptoCurrenciesListingViewModel>());
+                    services.AddSingleton<Func<CryptoCurrenciesListingViewModel>>(s =>
+                        () => s.GetRequiredService<CryptoCurrenciesListingViewModel>());
                     services.AddSingleton<NavigationService<CryptoCurrenciesListingViewModel>>();
 
-                    services.AddSingleton<Func<string, CryptoCurrencyDetailsViewModel>>(s =>
-                        (id) => new CryptoCurrencyDetailsViewModel(
-                                    s.GetRequiredService<NavigationService<CryptoCurrenciesListingViewModel>>(),
-                                    s.GetRequiredService<CapCoinService>(),
-                                    id
-                                ));
+                    services.AddTransient<CryptoCurrencyDetailsViewModel>();
+                    services.AddSingleton<Func<CryptoCurrencyDetailsViewModel>>(s =>
+                        () => s.GetRequiredService<CryptoCurrencyDetailsViewModel>());
                     services.AddSingleton<NavigationService<CryptoCurrencyDetailsViewModel>>();
 
                     services.AddSingleton<MainViewModel>();

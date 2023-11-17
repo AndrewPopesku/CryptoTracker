@@ -16,17 +16,16 @@ namespace CryptoTracker.Services
     public class CapCoinService
     {
         private HttpClient _httpClient;
-        private string _baseUrl;
 
         public CapCoinService(string baseUrl)
         {
-            _baseUrl = baseUrl;
             _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri(baseUrl);
         }
 
         public async Task<List<CryptoCurrency>> GetTopCryptoCurrencies(int quantity)
         {
-            var endpoint = "assets/";
+            var endpoint = "assets";
             var jsonString = await GetJsonDataFromEndpoint(endpoint);
 
             var cryptoCurrencies = JsonConvert.DeserializeObject<List<CryptoCurrency>>(jsonString);
@@ -58,14 +57,19 @@ namespace CryptoTracker.Services
         {
             try
             {
-                var response = await _httpClient.GetStringAsync(_baseUrl + endpoint);
+                var response = await _httpClient.GetStringAsync(endpoint);
                 var rawJson = JObject.Parse(response);
                 return rawJson["data"].ToString();
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error: No internet connection or server not available: {ex.Message}");
+                throw;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error fetching data from endpoint '{endpoint}': {ex.Message}");
-                return null;
+                throw;
             }
         }
     }

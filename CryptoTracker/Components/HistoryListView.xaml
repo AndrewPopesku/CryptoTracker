@@ -8,9 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <lvc:CartesianChart Series="{Binding PriceSeries}" LegendLocation="Right">
+        <lvc:CartesianChart Series="{Binding PriceSeries}">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Date" LabelFormatter="{Binding Formatter}"/>
+                <lvc:Axis LabelFormatter="{Binding Formatter}"/>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Price (USD)" LabelFormatter="{Binding YAxisLabelFormatter}"/>
