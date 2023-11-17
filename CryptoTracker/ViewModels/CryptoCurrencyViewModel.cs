@@ -29,7 +29,7 @@ namespace CryptoTracker.ViewModels
         {
             Id = cryptoCurrency.Id;
             Symbol = cryptoCurrency.Symbol.ToUpper();
-            Name = char.ToUpper(cryptoCurrency.Id[0]) + cryptoCurrency.Id.Substring(1);
+            Name = cryptoCurrency.Name;
             PriceUsd = cryptoCurrency.PriceUsd.ToString("C", new CultureInfo("en-us"));
             Change24Hr = cryptoCurrency.ChangePercent24Hr.ToString("+0.##%;-0.##%");
             VolumeUsd24Hr = cryptoCurrency.VolumeUsd24Hr.ToMoneyUsdStringFormat();

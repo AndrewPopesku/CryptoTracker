@@ -44,6 +44,20 @@ namespace CryptoTracker.Services
             return cryptoCurrency;
         }
 
+        public async Task<List<CryptoCurrency>> GetCryptoCurrenciesByNameOrSymbol(string filterString)
+        {
+            var endpoint = "assets";
+            var jsonString = await GetJsonDataFromEndpoint(endpoint);
+
+            var cryptoCurrencies = JsonConvert.DeserializeObject<List<CryptoCurrency>>(jsonString);
+
+            var normalizedFilterString = filterString.ToLower();
+            return cryptoCurrencies
+                .Where(crypto => crypto.Name.ToLower().Contains(normalizedFilterString) 
+                    || crypto.Symbol.ToLower().Contains(normalizedFilterString))
+                .ToList();
+        }
+
         public async Task<List<PriceHistoryEntry>> GetCryptoCurrencyHistoryById(string id)
         {
             var endpoint = "assets/" + id + "/history?interval=d1";

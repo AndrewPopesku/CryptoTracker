@@ -8,11 +8,33 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="DataListView" ItemsSource="{Binding Currencies}">
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBox Grid.Column="0"
+                     x:Name="SearchTextBox"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Right"
+                     Margin="5"
+                     Width="150"
+                     Text="{Binding SearchText}"/>
+            <Button 
+                    Grid.Column="1"
+                    Content="Search" 
+                    Width="50" 
+                    Height="20"
+                    Command="{Binding SearchCommand}"/>
+        </Grid>
+
+
+        <ListView Grid.Row="1" x:Name="DataListView" ItemsSource="{Binding Currencies}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Symbol" Width="auto">

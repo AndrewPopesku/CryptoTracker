@@ -14,7 +14,11 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
-            <Button Command="{Binding BackCommand}" Content="Back" Width="50" Height="20"/>
+            <Button Command="{Binding BackCommand}" 
+                    Content="Back" 
+                    Width="50" 
+                    Height="20"
+                    HorizontalAlignment="Left"/>
 
             <TextBlock Text="{Binding Currency.Name}" FontWeight="Bold" FontSize="30"/>
             <Grid>
