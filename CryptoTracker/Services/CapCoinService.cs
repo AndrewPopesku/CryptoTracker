@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Models;
+﻿using CryptoTracker.Exceptions;
+using CryptoTracker.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -63,13 +64,11 @@ namespace CryptoTracker.Services
             }
             catch (HttpRequestException ex)
             {
-                Console.WriteLine($"Error: No internet connection or server not available: {ex.Message}");
-                throw;
+                throw new FetchDataException("Error: No internet connection or server not available", ex);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error fetching data from endpoint '{endpoint}': {ex.Message}");
-                throw;
+                throw new FetchDataException($"Error: Error fetching data from endpoint '{_httpClient.BaseAddress + endpoint}'", ex);
             }
         }
     }

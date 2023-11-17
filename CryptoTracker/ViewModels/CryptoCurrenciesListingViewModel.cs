@@ -1,4 +1,5 @@
-﻿using CryptoTracker.Helpers;
+﻿using CryptoTracker.Exceptions;
+using CryptoTracker.Helpers;
 using CryptoTracker.Services;
 using CryptoTracker.Stores;
 using System;
@@ -37,8 +38,19 @@ namespace CryptoTracker.ViewModels
 
         private async void InitializeData(NavigationService<CryptoCurrencyDetailsViewModel> navigationService)
         {
-            var cryptoModelList = await _capCoinService.GetTopCryptoCurrencies(10);
-            Currencies.AddRange(cryptoModelList, navigationService);
+            try
+            {
+                var cryptoModelList = await _capCoinService.GetTopCryptoCurrencies(10);
+                Currencies.AddRange(cryptoModelList, navigationService);
+            }
+            catch (FetchDataException ex)
+            {
+                navigationService.NavigateToErrorView(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                navigationService.NavigateToErrorView("Something went wrong while loading cryptocurrenies");
+            }
         }
     }
 }

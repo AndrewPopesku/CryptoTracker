@@ -56,7 +56,6 @@ namespace CryptoTracker.ViewModels
         public CryptoCurrencyHistoryViewModel(CapCoinService capCoinService, string currencyId)
         {
             _capCoinService = capCoinService;
-            Thread.Sleep(1000);
             InitializeChart(currencyId);
         }
 

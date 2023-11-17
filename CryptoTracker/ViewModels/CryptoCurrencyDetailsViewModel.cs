@@ -5,13 +5,16 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Threading;
 using CryptoTracker.Models;
+using CryptoTracker.Exceptions;
+using System.Windows.Navigation;
+using System;
 
 namespace CryptoTracker.ViewModels
 {
     public class CryptoCurrencyDetailsViewModel : ViewModelBase
     {
+        private readonly NavigationService<CryptoCurrenciesListingViewModel> _navigationService;
         private readonly CapCoinService _capCoinService;
-
         private CryptoCurrencyViewModel? _currency;
         public CryptoCurrencyViewModel? Currency
         {
@@ -41,6 +44,7 @@ namespace CryptoTracker.ViewModels
             CapCoinService capCoinService
         )
         {
+            _navigationService = navigationService;
             _capCoinService = capCoinService;
             BackCommand = new NavigateCommand<CryptoCurrenciesListingViewModel>(navigationService);
         }
@@ -49,9 +53,20 @@ namespace CryptoTracker.ViewModels
         {
             if (currencyId != null)
             {
-                Currency = (await _capCoinService.GetCryptoCurrencyById(currencyId))
-                    .ToCryptoCurrencyViewMode();
-                HistoryViewModel = new CryptoCurrencyHistoryViewModel(_capCoinService, currencyId);
+                try
+                {
+                    Currency = (await _capCoinService.GetCryptoCurrencyById(currencyId))
+                        .ToCryptoCurrencyViewMode();
+                    HistoryViewModel = new CryptoCurrencyHistoryViewModel(_capCoinService, currencyId);
+                }
+                catch (FetchDataException ex)
+                {
+                    _navigationService.NavigateToErrorView(ex.Message, currencyId);
+                }
+                catch (Exception ex)
+                {
+                    _navigationService.NavigateToErrorView($"Something went wrong while loading '{currencyId}' currency", currencyId);
+                }
             }
         }
     }

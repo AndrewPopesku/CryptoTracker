@@ -9,11 +9,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:CryptoCurrenciesListingViewModel}">
                 <views:CryptoCurrenciesList/>
@@ -21,9 +16,11 @@
             <DataTemplate DataType="{x:Type vms:CryptoCurrencyDetailsViewModel}">
                 <views:CryptoCurrencyDetails/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ErrorViewModel}">
+                <views:ErrorView/>
+            </DataTemplate>
         </Grid.Resources>
         
-        <TextBlock Grid.Row="0" Text="{Binding ErrorMessage}" FontSize="16"/>
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>

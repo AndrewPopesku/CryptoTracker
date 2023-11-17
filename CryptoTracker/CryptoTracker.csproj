@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OxyPlot.Core" Version="2.1.2" />
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
   </ItemGroup>
 
 </Project>
