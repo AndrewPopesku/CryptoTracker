@@ -83,7 +83,7 @@ namespace CryptoTracker.ViewModels
             };
 
             // Assigning labels directly as strings
-            var labels = priceHistoryList.Select(entry => entry.Date.AddMicroseconds(entry.Time)
+            var labels = priceHistoryList.Select(entry => entry.Date
                 .ToString("MM/dd/yyyy HH:mm")).ToArray();
 
             YAxisLabelFormatter = value => value.ToMoneyUsdStringFormat();

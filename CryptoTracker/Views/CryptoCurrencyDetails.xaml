@@ -3,14 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CryptoTracker.Views"
              xmlns:components="clr-namespace:CryptoTracker.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="250"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0"
@@ -25,25 +24,41 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
                     <RowDefinition Height="35"/>
-                    <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="Price: " FontSize="16"/>
-                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Currency.PriceUsd}" FontSize="16"/>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Price: " FontSize="16"/>
+                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Currency.PriceUsd}" FontSize="16"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="Volume: " FontSize="16"/>
-                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Currency.VolumeUsd24Hr}" FontSize="16"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Volume: " FontSize="16"/>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Currency.VolumeUsd24Hr}" FontSize="16"/>
+                
             </Grid>
         </StackPanel>
 
-        <Grid Grid.Row="1">
-            <components:HistoryListView DataContext="{Binding HistoryViewModel}" Width="700"/>
-        </Grid>
+        <TabControl Grid.Row="1"
+                    Width="700"
+                    Margin="10">
+            <TabItem Header="Price change" Padding="10 0 10 0">
+                <components:HistoryListView DataContext="{Binding HistoryViewModel}"/>
+            </TabItem>
+
+            <TabItem Header="Candles" Padding="10 0 10 0">
+                <Grid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Markets" Padding="10 0 10 0">
+                <StackPanel>
+                    <components:TickersView DataContext="{Binding TickersViewModel}"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

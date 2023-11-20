@@ -15,6 +15,7 @@ namespace CryptoTracker.ViewModels
     {
         private readonly NavigationService<CryptoCurrenciesListingViewModel> _navigationService;
         private readonly CapCoinService _capCoinService;
+        private readonly CoinGeckoApiService _coinGeckoApiService;
         private CryptoCurrencyViewModel? _currency;
         public CryptoCurrencyViewModel? Currency
         {
@@ -37,15 +38,28 @@ namespace CryptoTracker.ViewModels
             }
         }
 
+        private CryptoCurrencyTickersViewModel? _tickersViewModel;
+        public CryptoCurrencyTickersViewModel? TickersViewModel
+        {
+            get => _tickersViewModel;
+            set
+            {
+                _tickersViewModel = value;
+                OnPropertyChanged(nameof(TickersViewModel));
+            }
+        }
+
         public ICommand BackCommand { get; }
 
         public CryptoCurrencyDetailsViewModel(
             NavigationService<CryptoCurrenciesListingViewModel> navigationService,
-            CapCoinService capCoinService
+            CapCoinService capCoinService,
+            CoinGeckoApiService coinGeckoApiService
         )
         {
             _navigationService = navigationService;
             _capCoinService = capCoinService;
+            _coinGeckoApiService = coinGeckoApiService;
             BackCommand = new NavigateCommand<CryptoCurrenciesListingViewModel>(navigationService);
         }
 
@@ -58,6 +72,7 @@ namespace CryptoTracker.ViewModels
                     Currency = (await _capCoinService.GetCryptoCurrencyById(currencyId))
                         .ToCryptoCurrencyViewMode();
                     HistoryViewModel = new CryptoCurrencyHistoryViewModel(_capCoinService, currencyId);
+                    TickersViewModel = new CryptoCurrencyTickersViewModel(_coinGeckoApiService, currencyId);
                 }
                 catch (FetchDataException ex)
                 {

@@ -26,6 +26,7 @@ namespace CryptoTracker
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton(new CapCoinService("https://api.coincap.io/v2/"));
+                    services.AddSingleton(new CoinGeckoApiService("https://api.coingecko.com/api/v3/"));
                     services.AddSingleton<NavigationStore>();
 
                     services.AddTransient<CryptoCurrenciesListingViewModel>();

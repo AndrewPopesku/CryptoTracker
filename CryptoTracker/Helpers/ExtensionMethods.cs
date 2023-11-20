@@ -1,25 +1,20 @@
 ﻿using CryptoTracker.Models;
 using CryptoTracker.Services;
-using CryptoTracker.Stores;
 using CryptoTracker.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryptoTracker.Helpers
 {
     public static class ExtensionMethods
     {
         public static void AddRange(
-            this ObservableCollection<CryptoCurrencyViewModel> value, 
+            this ObservableCollection<CryptoCurrencyViewModel> value,
             List<CryptoCurrency> list,
             NavigationService<CryptoCurrencyDetailsViewModel> navigationService
             )
         {
-            foreach(var crypto in list)
+            foreach (var crypto in list)
             {
                 value.Add(new CryptoCurrencyViewModel(crypto, navigationService));
             }
@@ -28,6 +23,17 @@ namespace CryptoTracker.Helpers
         public static CryptoCurrencyViewModel ToCryptoCurrencyViewMode(this CryptoCurrency cryptoCurrency)
         {
             return new CryptoCurrencyViewModel(cryptoCurrency);
+        }
+
+        public static void AddRange(
+            this ObservableCollection<Ticker> value,
+            List<Ticker> list
+            )
+        {
+            foreach (var ticker in list)
+            {
+                value.Add(ticker);
+            }
         }
 
         public static string ToMoneyUsdStringFormat(this double number)

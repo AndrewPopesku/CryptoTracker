@@ -31,7 +31,7 @@ namespace CryptoTracker.Services
 
             var cryptoCurrencies = JsonConvert.DeserializeObject<List<CryptoCurrency>>(jsonString);
 
-            return cryptoCurrencies.OrderByDescending(crypto => crypto.MarketCapUsd).Take(quantity).ToList();
+            return cryptoCurrencies.OrderByDescending(crypto => crypto.Rank).Take(30).ToList();
         }
 
         public async Task<CryptoCurrency> GetCryptoCurrencyById(string id)
