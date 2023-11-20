@@ -34,10 +34,6 @@
             
         </Grid>
 
-
-        <ScrollViewer>
-            
-        </ScrollViewer>
         <ListView Grid.Row="1" x:Name="DataListView" ItemsSource="{Binding Currencies}">
             <ListView.View>
                 <GridView>

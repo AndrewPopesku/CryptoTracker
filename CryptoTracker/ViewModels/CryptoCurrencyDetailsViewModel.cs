@@ -15,7 +15,7 @@ namespace CryptoTracker.ViewModels
     {
         private readonly NavigationService<CryptoCurrenciesListingViewModel> _navigationService;
         private readonly CapCoinService _capCoinService;
-        private readonly CoinGeckoApiService _coinGeckoApiService;
+        private readonly CoinGeckoService _coinGeckoApiService;
         private CryptoCurrencyViewModel? _currency;
         public CryptoCurrencyViewModel? Currency
         {
@@ -54,13 +54,13 @@ namespace CryptoTracker.ViewModels
         public CryptoCurrencyDetailsViewModel(
             NavigationService<CryptoCurrenciesListingViewModel> navigationService,
             CapCoinService capCoinService,
-            CoinGeckoApiService coinGeckoApiService
+            CoinGeckoService coinGeckoApiService
         )
         {
             _navigationService = navigationService;
             _capCoinService = capCoinService;
             _coinGeckoApiService = coinGeckoApiService;
-            BackCommand = new NavigateCommand<CryptoCurrenciesListingViewModel>(navigationService);
+            BackCommand = new NavigateCommand(navigationService);
         }
 
         internal async Task LoadData(string? currencyId)
@@ -78,7 +78,7 @@ namespace CryptoTracker.ViewModels
                 {
                     _navigationService.NavigateToErrorView(ex.Message, currencyId);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     _navigationService.NavigateToErrorView($"Something went wrong while loading '{currencyId}' currency", currencyId);
                 }

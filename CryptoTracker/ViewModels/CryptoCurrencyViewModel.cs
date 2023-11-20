@@ -41,7 +41,7 @@ namespace CryptoTracker.ViewModels
             NavigationService<CryptoCurrencyDetailsViewModel> navigationService
             ) : this(cryptoCurrency)
         {
-            DetailsCommand = new NavigateCommand<CryptoCurrencyDetailsViewModel>(navigationService);
+            DetailsCommand = new NavigateCommand(navigationService);
         }
     }
 }

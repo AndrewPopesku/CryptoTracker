@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace CryptoTracker.Commands
 {
-    public class NavigateCommand<TViewModel> : AsyncCommandBase where TViewModel : ViewModelBase
+    public class NavigateCommand : AsyncCommandBase
     {
-        private readonly NavigationService<TViewModel> _navigationService;
+        private readonly INavigationService _navigationService;
 
-        public NavigateCommand(NavigationService<TViewModel> navigationService)
+        public NavigateCommand(INavigationService navigationService)
         {
             _navigationService = navigationService;
         }

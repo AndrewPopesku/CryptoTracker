@@ -4,15 +4,9 @@ using CryptoTracker.Services;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
-using OxyPlot.Axes;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace CryptoTracker.ViewModels
 {
@@ -68,7 +62,7 @@ namespace CryptoTracker.ViewModels
             {
                 chartValues.Add(new ObservablePoint
                 {
-                    X = chartValues.Count, // Assign an index as X-value
+                    X = chartValues.Count,
                     Y = Convert.ToDouble(entry.PriceUsd)
                 });
             }
@@ -82,7 +76,6 @@ namespace CryptoTracker.ViewModels
                 }
             };
 
-            // Assigning labels directly as strings
             var labels = priceHistoryList.Select(entry => entry.Date
                 .ToString("MM/dd/yyyy HH:mm")).ToArray();
 

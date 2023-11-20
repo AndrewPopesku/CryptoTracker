@@ -1,13 +1,6 @@
 ﻿using CryptoTracker.Commands;
 using CryptoTracker.Services;
-using Prism.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace CryptoTracker.ViewModels
 {
@@ -30,6 +23,7 @@ namespace CryptoTracker.ViewModels
         public ErrorViewModel(string errorMessage, INavigationService navigationService, object? parameter)
         {
             ErrorMessage = errorMessage;
+            RetryCommand = new NavigateCommand(navigationService);
         }
     }
 }

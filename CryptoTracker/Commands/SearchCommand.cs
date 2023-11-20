@@ -9,13 +9,12 @@ namespace CryptoTracker.Commands
     public class SearchCommand : AsyncCommandBase
     {
         private readonly Func<Task> _execute;
-        private readonly Func<bool> _canExecute;
 
-        public SearchCommand(Func<Task> execute, Func<bool> canExecute = null)
+        public SearchCommand(Func<Task> execute)
         {
             _execute = execute;
-            _canExecute = canExecute;
         }
+
         public override async Task ExecuteAsync(object? parameter)
         {
             await _execute?.Invoke();

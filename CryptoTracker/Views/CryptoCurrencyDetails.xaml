@@ -48,12 +48,6 @@
             <TabItem Header="Price change" Padding="10 0 10 0">
                 <components:HistoryListView DataContext="{Binding HistoryViewModel}"/>
             </TabItem>
-
-            <TabItem Header="Candles" Padding="10 0 10 0">
-                <Grid>
-                </Grid>
-            </TabItem>
-
             <TabItem Header="Markets" Padding="10 0 10 0">
                 <StackPanel>
                     <components:TickersView DataContext="{Binding TickersViewModel}"/>

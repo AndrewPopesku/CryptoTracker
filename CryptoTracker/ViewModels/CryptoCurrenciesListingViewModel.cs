@@ -2,15 +2,8 @@
 using CryptoTracker.Exceptions;
 using CryptoTracker.Helpers;
 using CryptoTracker.Services;
-using CryptoTracker.Stores;
-using GalaSoft.MvvmLight.Command;
-using Prism.Commands;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -69,7 +62,7 @@ namespace CryptoTracker.ViewModels
             {
                 _navigationService.NavigateToErrorView(ex.Message);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _navigationService.NavigateToErrorView("Something went wrong while loading cryptocurrenies");
             }
@@ -93,7 +86,7 @@ namespace CryptoTracker.ViewModels
                 {
                     _navigationService.NavigateToErrorView(ex.Message);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     _navigationService.NavigateToErrorView("Something went wrong while loading cryptocurrenies");
                 }

@@ -12,11 +12,11 @@ namespace CryptoTracker.ViewModels
 {
     public class CryptoCurrencyTickersViewModel
     {
-        private readonly CoinGeckoApiService _coinGeckoApiService;
+        private readonly CoinGeckoService _coinGeckoApiService;
 
         public ObservableCollection<Ticker> Tickers { get; set; }
 
-        public CryptoCurrencyTickersViewModel(CoinGeckoApiService coinGeckoApiService, string currencyId)
+        public CryptoCurrencyTickersViewModel(CoinGeckoService coinGeckoApiService, string currencyId)
         {
             _coinGeckoApiService = coinGeckoApiService;
 
