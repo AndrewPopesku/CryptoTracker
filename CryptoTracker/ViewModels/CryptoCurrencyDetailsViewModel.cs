@@ -11,12 +11,19 @@ using System;
 
 namespace CryptoTracker.ViewModels
 {
+    /// <summary>
+    /// Represents a ViewModel responsible for displaying details of a specific cryptocurrency.
+    /// </summary>
     public class CryptoCurrencyDetailsViewModel : ViewModelBase
     {
         private readonly NavigationService<CryptoCurrenciesListingViewModel> _navigationService;
         private readonly CapCoinService _capCoinService;
         private readonly CoinGeckoService _coinGeckoApiService;
         private CryptoCurrencyViewModel? _currency;
+
+        /// <summary>
+        /// Gets or sets the cryptocurrency details to display.
+        /// </summary>
         public CryptoCurrencyViewModel? Currency
         {
             get => _currency;
@@ -28,6 +35,9 @@ namespace CryptoTracker.ViewModels
         }
 
         private CryptoCurrencyHistoryViewModel? _historyViewModel;
+        /// <summary>
+        /// Gets or sets the cryptocurrency history to display.
+        /// </summary>
         public CryptoCurrencyHistoryViewModel? HistoryViewModel
         {
             get => _historyViewModel;
@@ -39,6 +49,9 @@ namespace CryptoTracker.ViewModels
         }
 
         private CryptoCurrencyTickersViewModel? _tickersViewModel;
+        /// <summary>
+        /// Gets or sets the cryptocurrency tickers to display.
+        /// </summary>
         public CryptoCurrencyTickersViewModel? TickersViewModel
         {
             get => _tickersViewModel;
@@ -49,8 +62,17 @@ namespace CryptoTracker.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets the command to navigate back.
+        /// </summary>
         public ICommand BackCommand { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CryptoCurrencyDetailsViewModel"/> class.
+        /// </summary>
+        /// <param name="navigationService">An instance of NavigationService for navigation purposes.</param>
+        /// <param name="capCoinService">An instance of CapCoinService to retrieve cryptocurrency data.</param>
+        /// <param name="coinGeckoApiService">An instance of CoinGeckoService for additional cryptocurrency data.</param>
         public CryptoCurrencyDetailsViewModel(
             NavigationService<CryptoCurrenciesListingViewModel> navigationService,
             CapCoinService capCoinService,
@@ -63,6 +85,11 @@ namespace CryptoTracker.ViewModels
             BackCommand = new NavigateCommand(navigationService);
         }
 
+        /// <summary>
+        /// Loads data for a specific cryptocurrency using its ID.
+        /// </summary>
+        /// <param name="currencyId">The ID of the cryptocurrency to load data for.</param>
+        /// <returns>A task representing the asynchronous data loading operation.</returns>
         internal async Task LoadData(string? currencyId)
         {
             if (currencyId != null)
@@ -70,7 +97,7 @@ namespace CryptoTracker.ViewModels
                 try
                 {
                     Currency = (await _capCoinService.GetCryptoCurrencyById(currencyId))
-                        .ToCryptoCurrencyViewMode();
+                        .ToCryptoCurrencyViewModel();
                     HistoryViewModel = new CryptoCurrencyHistoryViewModel(_capCoinService, currencyId);
                     TickersViewModel = new CryptoCurrencyTickersViewModel(_coinGeckoApiService, currencyId);
                 }

@@ -1,16 +1,18 @@
 ﻿using CryptoTracker.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryptoTracker.Stores
 {
+    /// <summary>
+    /// Represents a store managing the current ViewModel used for navigation within the CryptoTracker application.
+    /// </summary>
     public class NavigationStore
     {
         private ViewModelBase _currentViewModel;
 
+        /// <summary>
+        /// Gets or sets the current ViewModel used for navigation.
+        /// </summary>
         public ViewModelBase CurrentViewModel
         {
             get => _currentViewModel;
@@ -21,6 +23,9 @@ namespace CryptoTracker.Stores
             }
         }
 
+        /// <summary>
+        /// Event raised when the current ViewModel changes.
+        /// </summary>
         public event Action CurrentViewModelChanged;
 
         private void OnCurrentViewModelChange()
