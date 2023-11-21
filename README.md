@@ -32,7 +32,7 @@ This tab displays the historical price changes over time for the selected crypto
 
 #### 2. Markets
 
-This tab lists information about available markets for each cryptocurrency
+This tab lists information about available markets for each cryptocurrency. Users can click on a market name to navigate to the ticker's webpage for more detailed information(or user can buy/sell crypto).
 ![image](https://github.com/AndrewPopesku/CryptoTracker/assets/101664066/85c4c206-10aa-468b-b0dc-7b889c83704b)
 
 ### Error View Page
